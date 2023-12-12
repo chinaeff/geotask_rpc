@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   prometheus:
     image: prom/prometheus
@@ -18,9 +19,11 @@ services:
 
   geo-service:
     build:
-      context: .cmd/api
+      context: .
+      dockerfile: ./cmd/api/Dockerfile.grpc # Указываем Dockerfile для gRPC-сервера
     ports:
-      - "8080:8080"
+      - "50051:50051"  # Порт для gRPC
+      - "8080:8080"     # Порт для HTTP (если необходимо)
     depends_on:
       - prometheus
     environment:

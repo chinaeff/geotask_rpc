@@ -10,9 +10,11 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 	"io"
 	"log"
+	"net"
 	"net/http"
 	"net/http/pprof"
 	_ "net/http/pprof"
+	"net/rpc"
 	"os"
 	"time"
 )
@@ -156,6 +158,15 @@ func main() {
 	}()
 
 	router := gin.Default()
+	rpcServer := rpc.NewServer()
+
+	lis, err := net.Listen("tcp", ":50051")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := rpcServer.Serve(lis); err != nil {
+		log.Fatal(err)
+	}
 
 	http.Handle("/swagger/", httpSwagger.Handler(
 		httpSwagger.URL("/docs/doc.json"),
