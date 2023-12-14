@@ -15,7 +15,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	client := geo.NewGeoServiceClient(conn)
+	client := geo.NewGeoServiceClient(nil)
 
 	searchRequest := &geo.SearchRequest{}
 	searchResponse, err := client.AddressSearch(context.Background(), searchRequest)

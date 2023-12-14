@@ -160,11 +160,12 @@ func main() {
 	router := gin.Default()
 	rpcServer := rpc.NewServer()
 
-	lis, err := net.Listen("tcp", ":50051")
+	_, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := rpcServer.Serve(lis); err != nil {
+
+	if err := rpcServer.Accept; err != nil {
 		log.Fatal(err)
 	}
 
